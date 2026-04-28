@@ -66,6 +66,7 @@ docker ps
 ### Paso B.2 - Instalar kubectl
 
 Por que: `kubectl` es el cliente para hablar con la API de Kubernetes.
+Los Kubernetes son un conjunto de servidores actuando como un clúster.
 
 ```bash
 curl -LO "https://dl.k8s.io/release/$(curl -Ls https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
