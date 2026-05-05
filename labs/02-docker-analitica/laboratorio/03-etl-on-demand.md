@@ -44,6 +44,7 @@ docker compose --profile etl run --rm etl
 
 ```bash
 curl -sS http://localhost:8000/db/ping
+curl -sS http://localhost:8000/metrics
 ```
 
 ## Qué validas y qué debes ver
@@ -51,6 +52,7 @@ curl -sS http://localhost:8000/db/ping
 - El proceso ETL termina con código 0.
 - Logs del ETL muestran ejecución completa (por ejemplo `ETL OK`).
 - La API sigue operativa tras correr ETL.
+- El endpoint `/metrics` devuelve registros cargados por ETL (por ejemplo `visitas` y `ventas`) con valores que cambian en cada ejecución.
 
 ## Errores comunes
 

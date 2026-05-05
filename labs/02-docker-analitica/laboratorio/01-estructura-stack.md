@@ -83,6 +83,15 @@ def db_ping():
     with engine.connect() as conn:
         one = conn.execute(text("SELECT 1")).scalar_one()
     return {"db": int(one)}
+
+@app.get("/metrics")
+def metrics():
+    engine = create_engine(DATABASE_URL)
+    with engine.connect() as conn:
+        rows = conn.execute(
+            text("SELECT metric, value FROM metrics ORDER BY metric ASC")
+        ).mappings().all()
+    return {"items": rows}
 ```
 
 Crea `labs/02-docker-analitica/trabajo/stack-analitica/api/Dockerfile`:
@@ -100,6 +109,7 @@ CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 **Qué estamos haciendo aquí**
 
 - Definir un servicio HTTP mínimo para validar salud y conexión real a DB.
+- Exponer un endpoint para leer los datos transformados por el ETL.
 - Empaquetar ese servicio en una imagen reproducible para ejecutarlo igual en cualquier entorno.
 
 ### 4) Crear contenido del ETL (código + imagen)
@@ -116,6 +126,7 @@ Crea `labs/02-docker-analitica/trabajo/stack-analitica/etl/etl.py`:
 
 ```python
 import os
+import random
 from sqlalchemy import create_engine, text
 import pandas as pd
 
@@ -123,7 +134,12 @@ DATABASE_URL = os.environ["DATABASE_URL"]
 
 def main() -> None:
     engine = create_engine(DATABASE_URL)
-    df = pd.DataFrame({"metric": ["visitas", "ventas"], "value": [100, 7]})
+    df = pd.DataFrame(
+        {
+            "metric": ["visitas", "ventas"],
+            "value": [random.randint(80, 200), random.randint(5, 30)],
+        }
+    )
     with engine.begin() as conn:
         conn.execute(text("CREATE TABLE IF NOT EXISTS metrics (metric TEXT, value INT)"))
         conn.execute(text("DELETE FROM metrics"))
@@ -151,6 +167,7 @@ CMD ["python", "-u", "etl.py"]
 
 - Separar el procesamiento batch del servicio API.
 - Asegurar que la lógica ETL puede ejecutarse de forma independiente y trazable.
+- Simular variaciones reales de negocio generando valores distintos en cada ejecución.
 
 ### 5) Crear `docker-compose.yml` del stack
 
