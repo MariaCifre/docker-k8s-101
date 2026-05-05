@@ -1,0 +1,18 @@
+exeples de yaml:
+
+clave:valor
+numero: 1
+palabra: "1"
+
+
+definirem al docker-compose:
+services:
+  servicio1:
+    image: ngix
+    container_name: minombre
+    ports:
+      - 9000:80 #array de puertos
+    volumes:
+      - local:contenedor
+  servicio2:
+    image: mysql

@@ -1,0 +1,18 @@
+#json para humanos
+#utilitzat normalemnt en entorns de desarrollo.
+
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: demo
+      POSTGRES_DB: demo
+  client:
+    image: python:3.11-slim
+    depends_on:
+      - db
+    command: >-
+      bash -lc "pip install -q psycopg[binary]==3.1.18 &&
+      python -u -c \"import psycopg; c=psycopg.connect('host=db user=demo password=demo dbname=demo'); print(c.execute('SELECT 1').fetchone())\""
