@@ -6,7 +6,7 @@ metadata:
   labels:
     app: kubernetes-bootcamp
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: kubernetes-bootcamp
@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
         - name: kubernetes-bootcamp
-          image: gcr.io/google-samples/kubernetes-bootcamp:v1
+          image: gcr.io/google-samples/kubernetes-bootcamp:v2
           ports:
             - containerPort: 8080
