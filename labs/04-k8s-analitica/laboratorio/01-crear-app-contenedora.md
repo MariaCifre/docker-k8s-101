@@ -127,6 +127,12 @@ docker build -t k8s-demo-etl:local labs/04-k8s-analitica/trabajo/apps/etl
 
 Cambia el endpoint `/health` para devolver version `v1` y reconstruye la imagen de API.
 
+```python
+@app.get("/health")
+def health():
+    return {"status": "ok","version": "v1"}
+```
+
 ## Solucion del reto
 
 Editar `app.py` y volver a ejecutar `docker build` de API.

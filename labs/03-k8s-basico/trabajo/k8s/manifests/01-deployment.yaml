@@ -17,6 +17,9 @@ spec:
     spec:
       containers:
         - name: kubernetes-bootcamp
-          image: gcr.io/google-samples/kubernetes-bootcamp:v2
+          image: gcr.io/google-samples/kubernetes-bootcamp:v1
+          env:
+          - name: APP_VERSION
+            value: v2
           ports:
             - containerPort: 8080

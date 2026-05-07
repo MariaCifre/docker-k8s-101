@@ -43,6 +43,15 @@ kubectl -n k8s-basics rollout status deployment/kubernetes-bootcamp
 kubectl -n k8s-basics get pods -l app=kubernetes-bootcamp
 ```
 
+@MariaCifre ➜ /workspaces/docker-k8s-101 (main) $ kubectl -n k8s-basics rollout status deployment/kubernetes-bootcamp
+deployment "kubernetes-bootcamp" successfully rolled out
+@MariaCifre ➜ /workspaces/docker-k8s-101 (main) $ kubectl -n k8s-basics get pods -l app=kubernetes-bootcamp
+NAME                                   READY   STATUS        RESTARTS      AGE
+kubernetes-bootcamp-66b5bbc597-hhhpb   1/1     Running       0             10s
+kubernetes-bootcamp-66b5bbc597-x2ct5   1/1     Running       0             10s
+kubernetes-bootcamp-978dd9cbc-gsxbl    1/1     Terminating   1 (24m ago)   52m
+kubernetes-bootcamp-978dd9cbc-wmq8z    1/1     Terminating   0             10m
+
 ### 4) Verificar version en uso
 
 ```bash
