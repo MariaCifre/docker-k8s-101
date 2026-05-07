@@ -45,6 +45,20 @@ kubectl -n k8s-basics get pods -l app=kubernetes-bootcamp
 
 ### 4) Verificar version en uso
 
+Si no tienes `rg` instalado:
+
+```bash
+sudo apt-get update && sudo apt-get install -y ripgrep
+```
+
+Alternativa sin instalar nada extra:
+
+```bash
+kubectl -n k8s-basics get deployment kubernetes-bootcamp -o yaml | grep -E "APP_VERSION|value:"
+```
+
+Con `rg`:
+
 ```bash
 kubectl -n k8s-basics get deployment kubernetes-bootcamp -o yaml | rg "APP_VERSION|value:"
 ```
