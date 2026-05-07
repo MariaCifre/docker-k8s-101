@@ -10,18 +10,24 @@ Actualizar por manifiestos garantiza trazabilidad del cambio y facilita rollback
 
 ## Ejecucion guiada
 
-### 1) Cambiar imagen del Deployment
+### 1) Cambiar configuracion del Deployment (rolling update real)
+
+Si no existe bloque `env` en el contenedor, anadelo. Si ya existe, actualiza `APP_VERSION`.
 
 En `labs/03-k8s-basico/trabajo/k8s/manifests/01-deployment.yaml`, cambia:
 
 ```yaml
-image: gcr.io/google-samples/kubernetes-bootcamp:v1
+env:
+  - name: APP_VERSION
+    value: v1
 ```
 
 por:
 
 ```yaml
-image: gcr.io/google-samples/kubernetes-bootcamp:v2
+env:
+  - name: APP_VERSION
+    value: v2
 ```
 
 ### 2) Aplicar cambio
@@ -40,17 +46,17 @@ kubectl -n k8s-basics get pods -l app=kubernetes-bootcamp
 ### 4) Verificar version en uso
 
 ```bash
-kubectl -n k8s-basics describe deployment kubernetes-bootcamp | rg "Image:"
+kubectl -n k8s-basics get deployment kubernetes-bootcamp -o yaml | rg "APP_VERSION|value:"
 ```
 
 ## Que validas y que debes ver
 
 - Rollout completado sin downtime perceptible.
-- Pods nuevos con la imagen `v2`.
+- Pods recreados con la nueva configuracion (`APP_VERSION=v2`).
 
 ## Errores comunes
 
-- Tag de imagen inexistente.
+- YAML mal indentado en bloque `env`.
 - No esperar a `rollout status` antes de validar.
 
 ## Reto
