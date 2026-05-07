@@ -66,11 +66,23 @@ kubectl apply -f labs/03-k8s-basico/trabajo/k8s/manifests/01-deployment.yaml
 ## Que validas y que debes ver
 
 - Deployment creado en namespace `k8s-basics`.
+
+namespace/k8s-basics created
+
 - Pod en estado `Running`.
+
+deployment.apps/kubernetes-bootcamp created
 
 ```bash
 kubectl -n k8s-basics get deployments,pods
 ```
+
+exemple:
+NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/kubernetes-bootcamp   1/1     1            1           52s
+
+NAME                                      READY   STATUS    RESTARTS   AGE
+pod/kubernetes-bootcamp-978dd9cbc-gsxbl   1/1     Running   0          52s
 
 ## Errores comunes
 
@@ -87,7 +99,10 @@ Sube replicas a 2 editando el YAML y reaplica.
 kubectl apply -f labs/03-k8s-basico/trabajo/k8s/manifests/01-deployment.yaml
 kubectl -n k8s-basics get pods -l app=kubernetes-bootcamp
 ```
+deployment.apps/kubernetes-bootcamp unchanged
 
+NAME                                  READY   STATUS    RESTARTS   AGE
+kubernetes-bootcamp-978dd9cbc-gsxbl   1/1     Running   0          66s
 ## Navegacion del libro
 
 - [Anterior](01-crear-cluster-kind.md)
